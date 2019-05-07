@@ -1,4 +1,10 @@
-body{font-family:"Gilroy-Medium", "PingFangSC-Medium", "Microsoft Yahei", "Myriad Pro", "Hiragino Sans GB", sans-serif}
+@font-face {
+	font-family:'Raleway';
+	src:url('../fonts/raleway_300.woff') format('woff');
+	font-weight:300;
+	font-style:normal;
+}
+html body,.ivu-divider{font-family:'Raleway','Microsoft YaHei' !important}
 body,html{height:100%}
 .clearfix:after{content:" ";display:block;clear:both;height:0}
 .clearfix{zoom:1;display:table}
@@ -13,3 +19,16 @@ body{line-height:1.5;font-size: 14px;}
 li,ol,ul{list-style:none}
 a{text-decoration:none}
 a:focus{outline:none}
+
+.login{width: 400px;margin: 10% auto;}
+.login .ivu-input-wrapper{margin: 0 0 20px 0;}
+
+
+
+
+
+
+
+
+
+{}
