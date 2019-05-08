@@ -1,10 +1,14 @@
 <template>
     <div class="login">
         <Card>
-            <Divider orientation="left">{{$t('login')}}</Divider>
-            <Input v-model="id" placeholder="User Name" clearable />
-            <Input v-model="pd" type="password" placeholder="Password" clearable  />
-            <Button size="large" type="primary" :loading="loading" @click="login()">Submit</Button>
+            <form @submit.prevent="register()" class="clearfix">
+                <Divider orientation="left">{{$t('login')}}</Divider>
+                <Input v-model="id" size="large" placeholder="User Name" clearable />
+                <Input v-model="pd" size="large" type="password" placeholder="Password" clearable />
+                <Input v-model="captchaInp" size="large" placeholder="Captcha" clearable style="width:186px;" />
+                <img :src="captcha" alt="captcha" @click="captcha = captcha + Math.floor(Math.random()*10 + 1)">
+                <Button type="primary" long size="large" @click="register()">Register</Button>
+            </form>
         </Card>
     </div>
 </template>
@@ -16,14 +20,19 @@ export default {
           loading:false,
           id: '',
           pd: '',
-          buttonSize: 'large'
+          captcha:'http://localhost:3000/captcha?',
+          captchaInp:''
       }
   },
+  created:function() {
+
+  },
   methods:{
-      login(){
-          this.$api.post('http://localhost:3000/users',{user:this.id,userPd:this.pd}).then(function(res){
+      register(){
+          this.$api.post('http://localhost:3000/register',{id:this.id,pd:this.pd}).then(function(res){
               console.log(res)
           })
+
       }
   }
 }

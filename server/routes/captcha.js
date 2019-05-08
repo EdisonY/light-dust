@@ -1,0 +1,27 @@
+var express = require('express');
+var router = express.Router();
+var svgCaptcha = require('svg-captcha');
+
+
+router.get('/', function(req, res, next) {
+    const cap = svgCaptcha.create({
+        // 翻转颜色
+        inverse: false,
+        // 字体大小
+        fontSize: 36,
+        // 噪声线条数
+        noise: 3,
+        // 宽度
+        width: 80,
+        // 高度
+        height: 30,
+    });
+    //req.session.captcha = cap.text; // session 存储验证码数值
+    console.log(cap.text)
+    res.cookie('captcha',cap.text);
+    res.type('svg'); // 响应的类型
+    res.send(cap.data)
+
+});
+
+module.exports = router;
