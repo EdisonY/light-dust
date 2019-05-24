@@ -14,6 +14,25 @@ var registerRouter = require('./routes/register');
 
 
 var app = express();
+var httpServer = require('http').Server(app);
+var io = require('socket.io')(httpServer);
+
+io.on('connection',  (socket)=>{
+    console.log('client connect server, ok!');
+    // io.emit()方法用于向服务端发送消息，参数1表示自定义的数据名，参数2表示需要配合事件传入的参数
+    io.emmit('server message', {msg:'client connect server success'});
+    // socket.broadcast.emmit()表示向除了自己以外的客户端发送消息
+    socket.broadcast.emmit('server message', {msg:'broadcast'});
+    // 监听断开连接状态：socket的disconnect事件表示客户端与服务端断开连接
+    socket.on('disconnect', ()=>{
+        console.log('connect disconnect');
+    });
+    // 与客户端对应的接收指定的消息
+    socket.on('client message', (data)=>{
+        cosnole.log(data);// hi server
+    });
+    socket.disconnect();
+});
 
 app.use(cors({
     origin:['http://localhost:8080'],  //指定接收的地址

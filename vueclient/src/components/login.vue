@@ -1,5 +1,6 @@
 <template>
     <div class="login">
+
         <Card>
             <form @submit.prevent="register()" class="clearfix">
                 <Divider orientation="left">{{$t('login')}}</Divider>
@@ -29,9 +30,20 @@ export default {
   },
   methods:{
       register(){
-          this.$api.post('http://localhost:3000/register',{id:this.id,pd:this.pd}).then(function(res){
-              console.log(res)
-          })
+            // this.$api.post('http://localhost:3000/register',{id:this.id,pd:this.pd}).then(function(res){
+            //     console.log(res)
+            // })
+
+            let socket = io('http://localhost:80');
+            // socket.emmit()用户客户端向服务端发送消息，服务端与之对应的是socket.on()来接收信息。
+            socket.emmit('client message', {msg:'hi, server'});
+            // socket.on()用于接收服务端发来的消息
+            socket.on('connect',  ()=>{
+                console.log('client connect server');
+            });
+            socket.on('disconnect', ()=>{
+                console.log('client disconnect');
+            });
 
       }
   }
